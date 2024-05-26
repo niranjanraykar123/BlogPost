@@ -20,3 +20,28 @@ router
     upload.single("listing[image]"),
     listingcontroller.createListing
   );
+
+//route for rendering form to add new blog
+router.get("/new", isLoggedIn, listingcontroller.renderNewForm);
+
+//route for getting particular blog and updating and deleting previous blog
+router
+  .route("/:id")
+  .get(listingcontroller.showListing)
+  .put(
+    isLoggedIn,
+    isOwner,
+    upload.single("listing[image]"),
+    listingcontroller.updateListing
+  )
+  .delete(isLoggedIn, isOwner, listingcontroller.deleteListing);
+
+  //rendering form for updating blog
+router.get(
+  "/:id/edit",
+  isLoggedIn,
+  isOwner,
+  listingcontroller.renderUpdateForm
+);
+
+module.exports = router;
