@@ -81,5 +81,15 @@ app.use("/listings",listingroutes)
 app.use("/listings/:id/reviews",reviewroutes)
 app.use("/",userroutes);
 
+//Code to handle errors using customized error handling middlewares
+app.all("*",(req,res,next)=>{
+    next(new Expresserror(404,"Page not found"));
+    })
+    
+    app.use((err,req,res,next)=>{
+    let{status=500,message="Some wrong"}=err;
+    res.status(status).render("error.ejs",{message});
+    })
+
 
 
