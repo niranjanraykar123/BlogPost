@@ -24,3 +24,21 @@ module.exports.signup=async(req,res,next)=>{
         
     }
 }
+
+//Providing functionality to allow user to login and logout using passport library for authentication
+module.exports.getLoginForm=(req,res)=>{
+    res.render("users/login.ejs");
+}
+module.exports.login=async (req,res)=>{
+    req.flash("success","Welcome back to BlogPost");
+    let redirectUrl=res.locals.redirectUrl || "/listings"
+    res.redirect(redirectUrl);
+ }
+ module.exports.logout=(req,res,next)=>{
+    req.logout((err)=>{
+        if(err){ return next(err);}
+        req.flash("success","you are logged out");
+        res.redirect("/listings");
+    })
+
+}
