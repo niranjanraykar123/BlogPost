@@ -5,7 +5,7 @@
          
             <form action="/listings/<%=list._id%>?_method=PUT" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label pt-4">Title</label>
             <input type="text" name="listing[title]" value="<%=list.title%>" class="form-control" required>
             <div class="valid-feedback">Title looks good!</div>
         </div>
@@ -23,11 +23,11 @@
     
   </div>
     <div class="mb-3">
-        <label for="country" class="form-label">Country</label>
+        <label for="country" class="form-label">Category</label>
         <input type="text" name="listing[country]" value="<%=list.country%>" class="form-control" required>
-        <div class="invalid-feedback">Country should be valid</div>
+        <div class="invalid-feedback">Category should be valid</div>
     </div>
-        <button class="btn btn-dark add-btn ">Edit Listing</button>
+        <button class="btn btn-dark  ">Edit Listing</button>
         <br><br>
         
     </form>

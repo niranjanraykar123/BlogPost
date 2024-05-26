@@ -23,6 +23,7 @@ module.exports.index = async (req, res, next) => {
     Listing.findById(req.params.id)
       .populate({ path: "reviews", populate: { path: "author" } })
       .populate("owner")
+      
       .then((result) => {
         // console.log(result);
         console.log(result);
@@ -92,12 +93,12 @@ module.exports.index = async (req, res, next) => {
   };
   //Deleting Blog from Database
   module.exports.deleteListing = async (req, res, next) => {
-    try {
-      let result = await Listing.findByIdAndDelete(req.params.id);
-      console.log(result);
-      req.flash("success", "Listing Deleted");
-      res.redirect("/listings");
-    } catch (err) {
-      next(err);
-    }
-  };
+  try {
+    let result = await Listing.findByIdAndDelete(req.params.id);
+    console.log(result);
+    req.flash("success", "Listing Deleted");
+    res.redirect("/listings");
+  } catch (err) {
+    next(err);
+  }
+};

@@ -25,6 +25,10 @@ const listingschema = new mongoose.Schema({
   },
 
   country: String,
+  createdAt: {
+    type: String,
+    default: new Date().toLocaleDateString(),
+  },
 });
 listingschema.post("findOneAndDelete", async (data) => {
   let res = await Review.deleteMany({ _id: { $in: data.reviews } });

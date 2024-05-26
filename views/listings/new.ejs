@@ -5,8 +5,8 @@
         
     <form action="/listings" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control" required>
+            <label for="title" class="form-label pt-4">Title</label>
+            <input type="text" name="listing[title]" placeholder="Add title" class="form-control" required>
             <div class="valid-feedback">Title looks good!</div>
         </div>
         <div class="mb-3">
@@ -16,18 +16,18 @@
     </div>
     <div class="mb-3">
         <label for="image" class="form-label">Upload Image </label>
-        <input type="file" name="listing[image]"  class="form-control">
-        required
+        <input type="file" name="listing[image]"  class="form-control" required>
+        
     </div>
     <div class="row">
    
   </div>
     <div class="mb-3">
-        <label for="country" class="form-label">Country</label>
-        <input type="text" name="listing[country]" placeholder="India" class="form-control" required>
-        <div class="invalid-feedback">Country should be valid</div>
+        <label for="country" class="form-label">Category</label>
+        <input type="text" name="listing[country]" placeholder="Add Category" class="form-control" required>
+        <div class="invalid-feedback">Category should be valid</div>
     </div>
-        <button class="btn btn-dark add-btn">Add Listing</button>
+        <button class="btn btn-dark">Add Listing</button>
         <br><br>
     </form>
     

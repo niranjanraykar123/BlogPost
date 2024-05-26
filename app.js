@@ -68,6 +68,12 @@ async function main(){
 app.listen(8080,()=>{
     console.log("Listning on port 8080");
 })
+// app.get("/abc",(req,res)=>{
+//     res.render("/")
+// })
+app.get("/",(req,res)=>{
+    res.redirect("/listings")
+})
 //Using locals property to integrate messages in ejs files
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
