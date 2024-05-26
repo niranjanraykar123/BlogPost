@@ -58,3 +58,36 @@ module.exports.index = async (req, res, next) => {
         next(err);
       });
   };
+  //Functionalities to update previous blogs
+  module.exports.renderUpdateForm = async (req, res, next) => {
+    try {
+      let list = await Listing.findById(req.params.id);
+      res.render("listings/edit.ejs", { list });
+    } catch (err) {
+      next(err);
+    }
+  };
+  module.exports.updateListing = async (req, res, next) => {
+    let result = listingschema.validate(req.body);
+    if (result.error) {
+      throw new Expresserror(400, result.error.message);
+    }
+    try {
+      let result = await Listing.findByIdAndUpdate(
+        req.params.id,
+        req.body.listing
+      );
+      if (typeof req.file !== "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        result.image = { url, filename };
+        await result.save();
+      }
+      req.flash("success", "Listing Updated");
+      console.log(result);
+      res.redirect(`/listings/${req.params.id}`);
+    } catch (err) {
+      next(err);
+    }
+  };
+  
