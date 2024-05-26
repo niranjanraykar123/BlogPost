@@ -2,7 +2,7 @@ if(process.env.NODE_ENV !="production"){
     require("dotenv").config();
 }
 
-//console.log(process.env.SECRET);
+//Integrating required dependencies
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
@@ -19,6 +19,7 @@ const User=require("./models/user.js");
 
 const flash=require("connect-flash");
 
+//Integrating routers 
 const listingroutes=require("./routers/listing.js")
 const reviewroutes= require("./routers/review.js");
 const userroutes=require("./routers/user.js");
@@ -28,6 +29,7 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"public")));
+//Implementing sessions to store session info in temp database
 const sessionOptions={
     secret:"mysuperseretcode",
     resave:false,
@@ -39,7 +41,9 @@ const sessionOptions={
     }
 }
 app.use(session(sessionOptions));
+//using flash for flashing one time message 
 app.use(flash());
+//using passport library for documentation
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -47,6 +51,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//Making connection with mongo-atlas
 const dburl=process.env.ATLASDB_URL;
 main()
 .then(()=>{
@@ -63,6 +68,18 @@ async function main(){
 app.listen(8080,()=>{
     console.log("Listning on port 8080");
 })
-
+//Using locals property to integrate messages in ejs files
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
+    next();
+})
+//})
+//Integrating routes to add routing for all three models
 app.use("/listings",listingroutes)
+app.use("/listings/:id/reviews",reviewroutes)
+app.use("/",userroutes);
+
+
 
