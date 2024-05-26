@@ -68,9 +68,7 @@ async function main(){
 app.listen(8080,()=>{
     console.log("Listning on port 8080");
 })
-// app.get("/abc",(req,res)=>{
-//     res.render("/")
-// })
+
 app.get("/",(req,res)=>{
     res.redirect("/listings")
 })
