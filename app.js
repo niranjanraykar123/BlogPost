@@ -7,6 +7,7 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
 const session=require("express-session")
+const MongoStore=require("connect-mongo")
 const path=require("path");
 const methodOverride=require('method-override');
 engine = require('ejs-mate');
@@ -30,7 +31,20 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname,"public")));
 //Implementing sessions to store session info in temp database
+const dburl=process.env.ATLASDB_URL;
+const store = MongoStore.create({
+    mongoUrl :dburl,
+    crypto : {
+        secret : "mysupersecretcode"
+    },
+    touchAfter : 24 * 3600,
+})
+store.on("error",()=>{
+    console.log("error in mongo session store",err);
+})
+
 const sessionOptions={
+    store,
     secret:"mysuperseretcode",
     resave:false,
     saveUninitialized:true,
@@ -52,7 +66,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 //Making connection with mongo-atlas
-const dburl=process.env.ATLASDB_URL;
+
 main()
 .then(()=>{
     console.log("connected");
